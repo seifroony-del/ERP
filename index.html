@@ -2,70 +2,39 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام Science Street POS</title>
+    <title>Science Street POS System</title>
     <style>
-        /* التنسيقات العامة */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; display: flex; min-height: 100vh; }
-        
-        /* القائمة الجانبية */
-        .sidebar { width: 260px; background-color: #2c3e50; color: white; padding: 20px; }
-        .logo { font-size: 22px; font-weight: bold; margin-bottom: 30px; color: #f1c40f; text-align: center; }
-        .nav-item { padding: 12px; margin-bottom: 8px; cursor: pointer; border-radius: 5px; transition: 0.3s; }
-        .nav-item:hover { background-color: #34495e; }
-        .nav-item.active { background-color: #6b35b6; }
-
-        /* منطقة المحتوى الرئيسية */
-        .main-content { flex: 1; padding: 30px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        
-        /* لوحة التحكم */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .card h3 { color: #6b35b6; margin-top: 10px; }
-        
-        /* الأزرار والجداول */
-        .btn-gold { background-color: #f1c40f; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
-        th, td { padding: 15px; text-align: right; border-bottom: 1px solid #eee; }
+        body { font-family: 'Segoe UI', sans-serif; display: flex; margin: 0; background: #f5f6fa; }
+        .sidebar { width: 250px; background: #2c3e50; color: white; height: 100vh; padding: 20px; }
+        .page { display: none; padding: 30px; flex: 1; }
+        .page.active { display: block; }
+        .nav-item { cursor: pointer; padding: 15px; border-radius: 8px; margin-bottom: 5px; }
+        .nav-item:hover, .nav-item.active { background: #6b35b6; }
+        .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="logo">Science Street POS</div>
-        <div class="nav-item active">🏠 الرئيسية</div>
-        <div class="nav-item">🛒 نقطة البيع</div>
-        <div class="nav-item">📦 المخزون</div>
-        <div class="nav-item">👥 العملاء</div>
-    </aside>
+<aside class="sidebar">
+    <h2 style="color: #f1c40f; text-align: center;">POS System</h2>
+    <div class="nav-item active" onclick="showPage('home')">🏠 الرئيسية</div>
+    <div class="nav-item" onclick="showPage('pos')">🛒 نقطة البيع</div>
+    <div class="nav-item" onclick="showPage('stock')">📦 المخزون</div>
+</aside>
 
-    <main class="main-content">
-        <header class="header">
-            <h1>لوحة التحكم</h1>
-            <button class="btn-gold">+ عملية بيع جديدة</button>
-        </header>
+<main id="main">
+    <div id="home" class="page active"><h1>لوحة التحكم</h1><div class="card">مرحباً بك يا Seif في نظام الإدارة.</div></div>
+    <div id="pos" class="page"><h1>نقطة البيع</h1><div class="card">استخدم الرابط لربط العمليات بـ Google Sheets.</div></div>
+    <div id="stock" class="page"><h1>إدارة المخزون</h1><div class="card">قائمة المنتجات الحالية.</div></div>
+</main>
 
-        <section class="stats-grid">
-            <div class="card"><span>إجمالي المبيعات اليوم</span><h3>5,400 ج.م</h3></div>
-            <div class="card"><span>عدد الطلبات</span><h3>12</h3></div>
-            <div class="card"><span>المنتجات النشطة</span><h3>145</h3></div>
-        </section>
-
-        <div class="card" style="margin-top: 30px;">
-            <h3>آخر المعاملات</h3>
-            <table>
-                <thead>
-                    <tr><th>رقم الفاتورة</th><th>التاريخ</th><th>الإجمالي</th><th>الحالة</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>#1001</td><td>2026/07/06</td><td>450 ج.م</td><td>تم الدفع</td></tr>
-                    <tr><td>#1002</td><td>2026/07/06</td><td>200 ج.م</td><td>تم الدفع</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
-
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>
 </body>
 </html>
