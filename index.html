@@ -8,7 +8,7 @@
         .sidebar { width: 250px; background: #2c3e50; color: white; height: 100vh; padding: 20px; }
         .page { display: none; padding: 30px; flex: 1; }
         .page.active { display: block; }
-        .nav-item { cursor: pointer; padding: 15px; border-radius: 8px; margin-bottom: 5px; }
+        .nav-item { cursor: pointer; padding: 15px; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
         .nav-item:hover, .nav-item.active { background: #6b35b6; }
         .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
@@ -17,23 +17,33 @@
 
 <aside class="sidebar">
     <h2 style="color: #f1c40f; text-align: center;">POS System</h2>
-    <div class="nav-item active" onclick="showPage('home')">🏠 الرئيسية</div>
-    <div class="nav-item" onclick="showPage('pos')">🛒 نقطة البيع</div>
-    <div class="nav-item" onclick="showPage('stock')">📦 المخزون</div>
+    <!-- تم إضافة تمرير المتغير 'event' بشكل صحيح هنا -->
+    <div class="nav-item active" onclick="showPage('home', event)">🏠 الرئيسية</div>
+    <div class="nav-item" onclick="showPage('pos', event)">🛒 نقطة البيع</div>
+    <div class="nav-item" onclick="showPage('stock', event)">📦 المخزون</div>
 </aside>
 
-<main id="main">
+<main id="main" style="flex: 1;">
     <div id="home" class="page active"><h1>لوحة التحكم</h1><div class="card">مرحباً بك يا Seif في نظام الإدارة.</div></div>
-    <div id="pos" class="page"><h1>نقطة البيع</h1><div class="card">استخدم الرابط لربط العمليات بـ Google Sheets.</div></div>
+    <div id="pos" class="page"><h1>نقطة البيع</h1><div class="card">نظام الربط مع Google Sheets مفعل.</div></div>
     <div id="stock" class="page"><h1>إدارة المخزون</h1><div class="card">قائمة المنتجات الحالية.</div></div>
 </main>
 
 <script>
-    function showPage(pageId) {
+    // تم تحديث الدالة لاستقبال المتغير e
+    function showPage(pageId, e) {
+        // إخفاء الصفحات
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // إزالة التحديد من القائمة
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        
+        // إظهار الصفحة المطلوبة
         document.getElementById(pageId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        
+        // إضافة التحديد للعنصر الذي تم الضغط عليه
+        if (e && e.currentTarget) {
+            e.currentTarget.classList.add('active');
+        }
     }
 </script>
 </body>
